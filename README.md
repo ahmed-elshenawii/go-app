@@ -1,82 +1,75 @@
-📌 Go Dockerized Application
+# 🐳 Go Dockerized Application
 
-This project is a simple Go web server containerized using Docker.
-The application listens on port 8080 and returns a greeting message.
+This is a simple **Go web server** containerized using Docker for easy deployment. The server listens on **port 8080** and responds with a greeting message.
 
-It includes:
+## Project Structure
 
-main.go — The Go source code
+```
+go-app/                 # Root folder
+├── Dockerfile           # Multi-stage Docker build
+├── go.mod               # Go module file
+├── main.go              # Go source code
+└── README.md            # Documentation
+```
 
-go.mod — Dependency/module configuration
+## Application Code
 
-Dockerfile — Multi-stage Docker build
+```go
+package main
 
-Full instructions to build, run, and push the Docker image
+import (
+	"fmt"
+	"log"
+	"net/http"
+)
 
-Public Docker Hub image link
+func handler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintln(w, "Hello from My Go Docker App!")
+}
 
-🏗 Project Structure
-.
-├── main.go
-├── go.mod
-├── Dockerfile
-└── README.md
+func main() {
+	http.HandleFunc("/", handler)
+	port := ":8080"
+	fmt.Println("Server is running on port", port)
+	log.Fatal(http.ListenAndServe(port, nil))
+}
+```
 
-🚀 Application Behavior
+## How It Works
 
-The server responds to requests on:
+* Handles **GET /** requests
+* Sends the message: `Hello from My Go Docker App!`
+* Runs locally or inside Docker container
 
-GET /
+## Running Locally
 
+```bash
+git clone https://github.com/ahmed-elshenawii/go-app.git
+cd go-app
+go run main.go
+```
 
-Response:
+* Open in browser: `http://localhost:8080`
 
-Hello from My Go Docker App!
+## Running with Docker
 
-🐳 Docker Image
-
-Public image on Docker Hub:
-
-👉 https://hub.docker.com/r/ahmedelshenawy1/go-app
-
-To pull the image:
-
-docker pull ahmedelshenawy1/go-app:latest
-
-🔧 Build the Docker Image Locally
-
-Build using Docker:
-
-docker build -t go-app .
-
-
-Or build with your Docker Hub tag:
-
+```bash
 docker build -t ahmedelshenawy1/go-app:latest .
-
-▶ Run the Application in Docker
-
-Run the container:
-
 docker run -p 8080:8080 ahmedelshenawy1/go-app:latest
+```
 
+* Access in browser: `http://localhost:8080`
 
-Then open your browser and visit:
+## Docker Hub Image
 
-http://localhost:8080
+* Public Image: [Docker Hub Link](https://hub.docker.com/r/ahmedelshenawy1/go-app)
+* Pull it directly:
 
+```bash
+docker pull ahmedelshenawy1/go-app:latest
+```
 
-Expected output:
+## Submission Links
 
-Hello from My Go Docker App!
-
-📤 Push the Image to Docker Hub
-
-Make sure you're logged in:
-
-docker login
-
-
-Then push:
-
-docker push ahmedelshenawy1/go-app:latest
+* **GitHub Repository**: [https://github.com/ahmed-elshenawii/go-app](https://github.com/ahmed-elshenawii/go-app)
+* **Docker Hub Image**: [https://hub.docker.com/r/ahmedelshenawy1/go-app](https://hub.docker.com/r/ahmedelshenawy1/go-app)
