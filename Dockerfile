@@ -1,9 +1,12 @@
-FROM golang:1.22
-
+FROM golang:1.24-alpine AS builder
 WORKDIR /app
-
 COPY . .
+RUN go mod tidy
+RUN go build -o app .
 
-RUN go build -o myapp .
+FROM alpine:3.19
+WORKDIR /app
+COPY --from=builder /app/app .
+EXPOSE 8080
+CMD ["./app"]
 
-CMD ["./myapp"]
